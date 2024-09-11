@@ -26,18 +26,14 @@ export default function Home() {
 
   return (
     <div className="max-w-2xl mx-auto">
-      <header className="mb-12 text-center">
-        <h1 className="text-4xl font-bold mb-2">bernardo</h1>
-        <p className="text-sm opacity-70">gosto de pensar que tecnologia mudou a minha vida</p>
-        <p className="text-sm opacity-50">(e espero impactar a sua também)</p>
-      </header>
+      <h1 className="text-4xl font-bold mb-8 text-center">bernardo</h1>
       <ul className="space-y-8">
         {posts.map((post) => (
           <li key={post.slug} className="border-t pt-8 first:border-t-0 first:pt-0">
             <Link href={`/post/${post.slug}`} className="block group">
               <h2 className="text-xl font-semibold mb-2 group-hover:underline">{post.title}</h2>
-              <p className="text-sm opacity-70">publicado em {(post as any).date}</p>
-              </Link>
+              <time className="text-sm opacity-70">{post.date}</time>
+            </Link>
           </li>
         ))}
       </ul>
