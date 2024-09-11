@@ -36,7 +36,7 @@ export default async function Post({ params }: { params: { postId: string } }) {
   return (
     <article className="max-w-2xl mx-auto">
       <Link href="/" className="text-sm opacity-70 hover:underline mb-8 inline-block">
-        ← Back to all posts
+        ← Voltar para a lista de posts
       </Link>
       <header className="mb-8">
         <h1 className="text-3xl font-bold mb-2">{(post as any).title}</h1>
@@ -48,3 +48,15 @@ export default async function Post({ params }: { params: { postId: string } }) {
     </article>
   )
 }
+export async function generateStaticParams() {
+  const folder = path.join(process.cwd(), 'posts')
+  const files = fs.readdirSync(folder)
+  const markdownPosts = files.filter((file) => file.endsWith('.md'))
+
+  return markdownPosts.map((fileName) => ({
+    postId: fileName.replace('.md', ''),
+  }))
+}
+
+// This ensures the page is statically generated
+export const dynamic = 'force-static'
