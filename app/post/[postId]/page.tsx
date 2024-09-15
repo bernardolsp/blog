@@ -1,3 +1,4 @@
+//@ts-nocheck
 import fs from 'fs'
 import path from 'path'
 import matter from 'gray-matter'
@@ -6,7 +7,6 @@ import html from 'remark-html'
 import remarkGfm from 'remark-gfm'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-
 async function getPostContent(slug: string) {
   const folder = path.join(process.cwd(), 'posts')
   const file = `${slug}.md`
@@ -45,7 +45,10 @@ export default async function Post({ params }: { params: { postId: string } }) {
         className="prose dark:prose-invert max-w-none"
         dangerouslySetInnerHTML={{ __html: post.contentHtml }}
       />
+      <script defer src="https://comentario.bernardolopes.com/comentario.js"></script>
+      <comentario-comments></comentario-comments>
     </article>
+
   )
 }
 export async function generateStaticParams() {
