@@ -46,6 +46,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
+      <script defer src="https://comentario.bernardolopes.com/comentario.js"></script>
         <ThemeProvider>
           <div className="min-h-screen transition-colors duration-300 ease-in-out">
             <ThemeToggle />
