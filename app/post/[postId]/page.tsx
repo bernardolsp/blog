@@ -28,7 +28,6 @@ export async function generateMetadata({ params }: { params: { postId: string } 
   }
 }
 
-
 async function getPostContent(slug: string) {
   const folder = path.join(process.cwd(), 'posts')
   const file = `${slug}.md`

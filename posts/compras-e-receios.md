@@ -33,6 +33,6 @@ se comprar hoje e for demitido depois de amanhã - vai ser um puta bad timing, p
 
 gosto de pensar que independente de todas as dores, de todas as dificuldades e sofrimentos, *venceremos*. pode ser que não seja hoje, ou amanhã... mas venceremos.
 
-essa vitória tem sabor de duas petras 473ml e uma stela 473ml, Calgary e domingo a noite. qualquer semelhança com a realidade é... provavelmente, real.
+essa vitória tem sabor de duas petras 473ml e uma stela 473ml, Calgary (do Bon Iver) e domingo a noite. qualquer semelhança com a realidade é... provavelmente, real.
 
 _bernardo_
