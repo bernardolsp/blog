@@ -1,6 +1,7 @@
 ---
 title: "introdução ao ser"
 date: "2024-10-09"
+description: "sobre se entender além de quem você se diz ser"
 ---
 
 ### olá, eu sou o bernardo

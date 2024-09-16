@@ -7,6 +7,28 @@ import html from 'remark-html'
 import remarkGfm from 'remark-gfm'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
+
+export async function generateMetadata({ params }: { params: { postId: string } }): Promise<Metadata> {
+  const post = await getPostContent(params.postId)
+  return {
+    title: post.title,
+    description: post.description || `Read ${post.title} on bernardo`,
+    openGraph: {
+      title: post.title,
+      description: post.description || `Read ${post.title} on bernardo`,
+      type: 'article',
+      publishedTime: post.date,
+      authors: ['Bernardo'],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: post.title,
+      description: post.description || `Read ${post.title} on bernardo`,
+    },
+  }
+}
+
+
 async function getPostContent(slug: string) {
   const folder = path.join(process.cwd(), 'posts')
   const file = `${slug}.md`

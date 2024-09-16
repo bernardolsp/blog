@@ -1,7 +1,25 @@
 import Link from 'next/link'
 import fs from 'fs'
 import path from 'path'
+import type { Metadata } from 'next'
 import matter from 'gray-matter'
+
+
+export const metadata: Metadata = {
+  title: {
+    default: 'blog do bernardo',
+    template: '%s | bernardo'
+  },
+  description: 'um blog sobre vida e tecnologia',
+  openGraph: {
+    title: 'bernardo',
+    description: 'um blog sobre vida e tecnologia',
+    url: 'https://bernardolopes.com',
+    siteName: 'bernardo',
+    locale: 'pt_BR',
+    type: 'website',
+  },
+}
 
 function getPostMetadata() {
   const folder = path.join(process.cwd(), 'posts')
