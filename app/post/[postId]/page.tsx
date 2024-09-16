@@ -66,7 +66,6 @@ export default async function Post({ params }: { params: { postId: string } }) {
         className="prose dark:prose-invert max-w-none"
         dangerouslySetInnerHTML={{ __html: post.contentHtml }}
       />
-      <script defer src="https://comentario.bernardolopes.com/comentario.js"></script>
       <comentario-comments></comentario-comments>
     </article>
 
