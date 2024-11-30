@@ -35,6 +35,6 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          projectName: your-project-name # Replace with your Cloudflare Pages project name
+          projectName: bernardolopescom # Replace with your Cloudflare Pages project name
           directory: out # The directory containing your static assets
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
