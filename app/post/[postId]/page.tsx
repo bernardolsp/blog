@@ -7,6 +7,7 @@ import html from 'remark-html'
 import remarkGfm from 'remark-gfm'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
+import AudioPlayer from '../../components/audioplayer'
 
 export async function generateMetadata({ params }: { params: { postId: string } }): Promise<Metadata> {
   const post = await getPostContent(params.postId)
@@ -61,12 +62,12 @@ export default async function Post({ params }: { params: { postId: string } }) {
       </Link>
       <header className="mb-8">
         <h1 className="text-3xl font-bold mb-2">{(post as any).title}</h1>
+        {post.audio && <AudioPlayer src={post.audio} />}
       </header>
       <div
         className="prose dark:prose-invert max-w-none"
         dangerouslySetInnerHTML={{ __html: post.contentHtml }}
       />
-      <comentario-comments></comentario-comments>
     </article>
 
   )

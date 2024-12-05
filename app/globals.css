@@ -93,3 +93,7 @@ body {
   margin-top: 0.5em;
   margin-bottom: 0.5em;
 }
+
+.prose a {
+  color: #0000EE  
+}
