@@ -47,11 +47,29 @@ async function getPostContent(slug: string) {
   const file = `${slug}.md`
   const content = fs.readFileSync(path.join(folder, file), 'utf8')
   const matterResult = matter(content)
+  
+  // Get images from frontmatter
+  const images = matterResult.data.images || []
+  
+  // Replace [images/N] placeholders with actual markdown images
+  let processedMarkdown = matterResult.content
+  if (images.length > 0) {
+    images.forEach((imageUrl: string, index: number) => {
+      const placeholder = `[images/${index}]`
+      const imageMarkdown = `![Image ${index + 1}](${imageUrl})`
+      // Escape special regex characters in the placeholder
+      const escapedPlaceholder = placeholder.replace(/[\[\]\/]/g, '\\$&')
+      processedMarkdown = processedMarkdown.replace(
+        new RegExp(escapedPlaceholder, 'g'),
+        imageMarkdown
+      )
+    })
+  }
 
   const processedContent = await remark()
     .use(html)
     .use(remarkGfm)
-    .process(matterResult.content)
+    .process(processedMarkdown)
   const contentHtml = processedContent.toString()
 
   const readingTime = calculateReadingTime(matterResult.content)
