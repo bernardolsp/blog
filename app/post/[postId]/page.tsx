@@ -221,7 +221,7 @@ export default async function Post({ params }: { params: { postId: string } }) {
 
       {/* Comments Section */}
       <section className="px-6 py-16 border-t border-border animate-slide-up" style={{ animationDelay: '300ms' }}>
-        <div className="max-w-2xl mx-auto">
+        <div className="max-w-3xl mx-auto">
           <CusdisComments
             attrs={{
               host: 'https://comments.bernardolopes.com',

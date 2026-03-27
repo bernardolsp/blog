@@ -32,6 +32,46 @@ export default function CusdisComments({ attrs }: CusdisCommentsProps) {
     threadDiv.setAttribute('data-page-url', attrs.pageUrl || '')
     threadDiv.setAttribute('data-page-title', attrs.pageTitle || '')
     
+    // Custom CSS to match site design
+    const customCss = `
+      .cusdis-thread {
+        font-family: var(--font-body), Georgia, serif !important;
+      }
+      .cusdis-thread * {
+        font-family: var(--font-body), Georgia, serif !important;
+      }
+      .cusdis-textarea {
+        border: 1px solid hsl(var(--border)) !important;
+        border-radius: 0.5rem !important;
+        background: hsl(var(--background)) !important;
+        color: hsl(var(--foreground)) !important;
+        font-size: 1rem !important;
+        resize: vertical !important;
+      }
+      .cusdis-textarea:focus {
+        outline: none !important;
+        border-color: hsl(var(--accent)) !important;
+      }
+      .cusdis-btn {
+        background: hsl(var(--foreground)) !important;
+        color: hsl(var(--background)) !important;
+        border-radius: 0.5rem !important;
+        font-weight: 500 !important;
+        padding: 0.5rem 1rem !important;
+      }
+      .cusdis-btn:hover {
+        opacity: 0.9 !important;
+      }
+      .cusdis-comment-content {
+        line-height: 1.8 !important;
+      }
+      .cusdis-comment-author {
+        font-family: var(--font-display), Georgia, serif !important;
+        font-weight: 500 !important;
+      }
+    `
+    threadDiv.setAttribute('data-css', customCss)
+    
     container.appendChild(threadDiv)
 
     // Load the Cusdis script
