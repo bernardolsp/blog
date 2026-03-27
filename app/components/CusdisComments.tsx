@@ -15,7 +15,7 @@ interface CusdisCommentsProps {
 
 // Custom CSS injected into the Cusdis iframe to match the blog's aesthetic.
 // Light mode uses warm off-white tones; dark mode uses warm dark browns.
-// Fonts: Playfair Display for headings, Source Serif 4 for body text.
+// Loads Playfair Display + Source Serif 4 via Google Fonts (CSP updated to allow).
 const customStyles = `
   @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Source+Serif+4:wght@300;400;500;600&display=swap');
 
