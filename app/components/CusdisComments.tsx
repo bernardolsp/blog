@@ -1,6 +1,7 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useCallback } from 'react'
+import { useTheme } from '../ThemeProvider'
 
 interface CusdisCommentsProps {
   attrs: {
@@ -14,7 +15,26 @@ interface CusdisCommentsProps {
 
 export default function CusdisComments({ attrs }: CusdisCommentsProps) {
   const containerRef = useRef<HTMLDivElement>(null)
-  const scriptRef = useRef<HTMLScriptElement | null>(null)
+  const iframeRef = useRef<HTMLIFrameElement | null>(null)
+  const { theme } = useTheme()
+
+  const sendThemeToIframe = useCallback((newTheme: string) => {
+    if (iframeRef.current?.contentWindow) {
+      iframeRef.current.contentWindow.postMessage(
+        JSON.stringify({
+          from: 'cusdis',
+          event: 'setTheme',
+          data: newTheme,
+        }),
+        '*'
+      )
+    }
+  }, [])
+
+  // Update theme when it changes
+  useEffect(() => {
+    sendThemeToIframe(theme)
+  }, [theme, sendThemeToIframe])
 
   useEffect(() => {
     const container = containerRef.current
@@ -23,84 +43,90 @@ export default function CusdisComments({ attrs }: CusdisCommentsProps) {
     // Clear existing content
     container.innerHTML = ''
 
-    // Create the Cusdis thread div with proper styling
-    const threadDiv = document.createElement('div')
-    threadDiv.id = 'cusdis_thread'
-    threadDiv.setAttribute('data-host', attrs.host)
-    threadDiv.setAttribute('data-app-id', attrs.appId)
-    threadDiv.setAttribute('data-page-id', attrs.pageId)
-    threadDiv.setAttribute('data-page-url', attrs.pageUrl || '')
-    threadDiv.setAttribute('data-page-title', attrs.pageTitle || '')
-    
-    // Custom CSS to match site design
-    const customCss = `
-      .cusdis-thread {
-        font-family: var(--font-body), Georgia, serif !important;
-      }
-      .cusdis-thread * {
-        font-family: var(--font-body), Georgia, serif !important;
-      }
-      .cusdis-textarea {
-        border: 1px solid hsl(var(--border)) !important;
-        border-radius: 0.5rem !important;
-        background: hsl(var(--background)) !important;
-        color: hsl(var(--foreground)) !important;
-        font-size: 1rem !important;
-        resize: vertical !important;
-      }
-      .cusdis-textarea:focus {
-        outline: none !important;
-        border-color: hsl(var(--accent)) !important;
-      }
-      .cusdis-btn {
-        background: hsl(var(--foreground)) !important;
-        color: hsl(var(--background)) !important;
-        border-radius: 0.5rem !important;
-        font-weight: 500 !important;
-        padding: 0.5rem 1rem !important;
-      }
-      .cusdis-btn:hover {
-        opacity: 0.9 !important;
-      }
-      .cusdis-comment-content {
-        line-height: 1.8 !important;
-      }
-      .cusdis-comment-author {
-        font-family: var(--font-display), Georgia, serif !important;
-        font-weight: 500 !important;
-      }
-    `
-    threadDiv.setAttribute('data-css', customCss)
-    
-    container.appendChild(threadDiv)
+    // Build iframe srcdoc manually for full control
+    const cssUrl = `${attrs.host}/js/style.css`
+    const iframeJsUrl = `${attrs.host}/js/iframe.umd.js`
 
-    // Load the Cusdis script
-    const script = document.createElement('script')
-    script.src = `${attrs.host}/js/cusdis.es.js`
-    script.async = true
-    script.defer = true
-    
-    container.appendChild(script)
-    scriptRef.current = script
-
-    return () => {
-      // Cleanup
-      if (scriptRef.current && container.contains(scriptRef.current)) {
-        container.removeChild(scriptRef.current)
+    const iframeContent = `<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="${cssUrl}">
+    <base target="_parent" />
+    <script>
+      window.CUSDIS_LOCALE = {};
+      window.__DATA__ = ${JSON.stringify({
+        host: attrs.host,
+        appId: attrs.appId,
+        pageId: attrs.pageId,
+        pageUrl: attrs.pageUrl || '',
+        pageTitle: attrs.pageTitle || '',
+      })};
+    </script>
+    <style>
+      :root {
+        color-scheme: light;
       }
-      if (container.contains(threadDiv)) {
-        container.removeChild(threadDiv)
+      html, body {
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        background: transparent;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script src="${iframeJsUrl}" type="module"></script>
+  </body>
+</html>`
+
+    // Create iframe
+    const iframe = document.createElement('iframe')
+    iframe.srcdoc = iframeContent
+    iframe.style.width = '100%'
+    iframe.style.border = '0'
+    iframe.style.display = 'block'
+    iframe.style.overflow = 'hidden'
+    iframe.style.minHeight = '300px'
+    iframe.style.colorScheme = 'normal'
+
+    iframeRef.current = iframe
+
+    // Listen for messages from the iframe
+    const onMessage = (e: MessageEvent) => {
+      try {
+        const msg = JSON.parse(e.data)
+        if (msg.from === 'cusdis') {
+          if (msg.event === 'resize') {
+            // Add some padding to prevent any scrollbar
+            iframe.style.height = (msg.data + 20) + 'px'
+          }
+          if (msg.event === 'onload') {
+            // Send current theme once iframe loads
+            sendThemeToIframe(theme)
+          }
+        }
+      } catch {
+        // ignore non-JSON messages
       }
     }
-  }, [attrs])
+
+    window.addEventListener('message', onMessage)
+    container.appendChild(iframe)
+
+    return () => {
+      window.removeEventListener('message', onMessage)
+      iframeRef.current = null
+      container.innerHTML = ''
+    }
+  }, [attrs, sendThemeToIframe, theme])
 
   return (
     <div>
-      <h3 className="text-base font-display font-medium mb-4 text-muted-foreground">comentários</h3>
+      <h3 className="text-base font-display font-medium mb-4 text-muted-foreground">comentarios</h3>
       <div 
         ref={containerRef} 
-        className="min-h-[300px]" 
-        style={{ minHeight: '300px' }}
+        className="w-full"
       />
     </div>
   )
