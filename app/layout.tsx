@@ -6,12 +6,12 @@ import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: {
-    default: 'blog do bernardo',
+    default: 'bernardo',
     template: '%s | bernardo'
   },
   description: 'um blog sobre vida e tecnologia',
   openGraph: {
-    title: 'blog do bernardo',
+    title: 'bernardo',
     description: 'um blog sobre vida e tecnologia',
     url: 'https://bernardolopes.com',
     siteName: 'bernardo',
@@ -49,12 +49,21 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
+    <html lang="pt-BR" className="scroll-smooth">
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link 
+          href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;0,8..60,600;1,8..60,400&display=swap" 
+          rel="stylesheet" 
+        />
+      </head>
+      {/* eslint-disable-next-line @next/next/no-page-custom-font */}
       <body>
         <ThemeProvider>
-          <div className="min-h-screen transition-colors duration-300 ease-in-out">
+          <div className="min-h-screen transition-colors duration-500 ease-out">
             <ThemeToggle />
-            <main className="container mx-auto px-4 py-8">
+            <main className="relative">
               {children}
             </main>
           </div>

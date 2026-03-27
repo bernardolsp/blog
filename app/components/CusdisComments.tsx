@@ -23,7 +23,7 @@ export default function CusdisComments({ attrs }: CusdisCommentsProps) {
     // Clear existing content
     container.innerHTML = ''
 
-    // Create the Cusdis thread div
+    // Create the Cusdis thread div with proper styling
     const threadDiv = document.createElement('div')
     threadDiv.id = 'cusdis_thread'
     threadDiv.setAttribute('data-host', attrs.host)
@@ -55,8 +55,13 @@ export default function CusdisComments({ attrs }: CusdisCommentsProps) {
   }, [attrs])
 
   return (
-    <div className="mt-16 pt-8 border-t border-gray-200 dark:border-gray-800">
-      <div ref={containerRef} />
+    <div>
+      <h3 className="text-base font-display font-medium mb-4 text-muted-foreground">comentários</h3>
+      <div 
+        ref={containerRef} 
+        className="min-h-[300px]" 
+        style={{ minHeight: '300px' }}
+      />
     </div>
   )
 }
