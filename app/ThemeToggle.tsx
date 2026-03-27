@@ -8,10 +8,10 @@ export function ThemeToggle() {
   return (
     <button
       onClick={toggleTheme}
-      className={`fixed top-6 right-6 p-3 rounded-full transition-all duration-300 ease-out hover:scale-110 z-50 ${
+      className={`p-2 rounded-full transition-all duration-300 ease-out hover:scale-110 ${
         theme === 'light' 
-          ? 'bg-background text-foreground border border-border shadow-sm hover:shadow-md hover:border-accent/50' 
-          : 'bg-secondary text-accent border border-border shadow-sm hover:shadow-md hover:border-accent/50'
+          ? 'text-muted-foreground hover:text-accent' 
+          : 'text-accent hover:text-accent/80'
       }`}
       aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
     >
@@ -32,6 +32,19 @@ export function ThemeToggle() {
           <path d="m19.07 4.93-1.41 1.41"/>
         </svg>
       )}
+    </button>
+  )
+}
+
+export function ThemeToggleText() {
+  const { theme, toggleTheme } = useTheme()
+
+  return (
+    <button
+      onClick={toggleTheme}
+      className="text-sm text-muted-foreground hover:text-accent transition-colors duration-300"
+    >
+      {theme === 'light' ? 'modo escuro' : 'modo claro'}
     </button>
   )
 }

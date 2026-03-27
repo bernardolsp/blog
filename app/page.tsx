@@ -3,6 +3,17 @@ import fs from 'fs'
 import path from 'path'
 import type { Metadata } from 'next'
 import matter from 'gray-matter'
+import { ThemeToggleText } from './ThemeToggle'
+
+function slugifyTag(tag: string): string {
+  return tag
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9-]/g, '-')
+    .replace(/-+/g, '-')
+    .replace(/^-|-$/g, '')
+}
 
 export const metadata: Metadata = {
   title: 'bernardo',
@@ -66,8 +77,8 @@ export default function Home() {
           </p>
         </div>
         
-        {/* RSS Link */}
-        <div className="mt-6">
+        {/* RSS Link & Theme Toggle */}
+        <div className="mt-6 flex items-center justify-center gap-4">
           <Link 
             href="/feed.xml" 
             className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-accent transition-colors duration-300"
@@ -79,6 +90,8 @@ export default function Home() {
             </svg>
             assinar via rss
           </Link>
+          <span className="text-muted-foreground/40">·</span>
+          <ThemeToggleText />
         </div>
       </header>
 
@@ -91,63 +104,63 @@ export default function Home() {
               className="group animate-slide-up"
               style={{ animationDelay: `${index * 100}ms` }}
             >
-              <Link 
-                href={`/post/${post.slug}`}
-                className="block py-5 border-t border-border first:border-t-0 first:pt-3 transition-all duration-300"
-              >
-                <div className="space-y-3">
-                  {/* Date */}
-                  <time className="text-sm text-muted-foreground/70 font-body">
-                    {formatDate(post.date)}
-                  </time>
+              <div className="block py-5 border-t border-border first:border-t-0 first:pt-3 transition-all duration-300">
+                <Link href={`/post/${post.slug}`} className="block group">
+                  <div className="space-y-3">
+                    {/* Date */}
+                    <time className="text-sm text-muted-foreground/70 font-body">
+                      {formatDate(post.date)}
+                    </time>
+                    
+                    {/* Title */}
+                    <h2 className="text-2xl md:text-3xl font-display font-medium group-hover:text-accent transition-colors duration-300 leading-tight">
+                      {post.title}
+                    </h2>
+                    
+                    {/* Description */}
+                    {post.description && (
+                      <p className="text-base text-muted-foreground leading-relaxed max-w-2xl">
+                        {post.description}
+                      </p>
+                    )}
+                  </div>
                   
-                  {/* Title */}
-                  <h2 className="text-2xl md:text-3xl font-display font-medium group-hover:text-accent transition-colors duration-300 leading-tight">
-                    {post.title}
-                  </h2>
-                  
-                  {/* Description */}
-                  {post.description && (
-                    <p className="text-base text-muted-foreground leading-relaxed max-w-2xl">
-                      {post.description}
-                    </p>
-                  )}
-                  
-                  {/* Tags */}
-                  {post.tags.length > 0 && (
-                    <div className="flex flex-wrap gap-2 pt-2">
-                      {post.tags.map((tag: string) => (
-                        <span 
-                          key={tag} 
-                          className="text-xs px-3 py-1 rounded-full bg-secondary text-secondary-foreground/80"
-                        >
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-                  )}
-                </div>
+                  {/* Read more indicator */}
+                  <div className="mt-4 flex items-center gap-2 text-sm text-muted-foreground/60 group-hover:text-accent transition-all duration-300">
+                    <span>ler mais</span>
+                    <svg 
+                      xmlns="http://www.w3.org/2000/svg" 
+                      width="16" 
+                      height="16" 
+                      viewBox="0 0 24 24" 
+                      fill="none" 
+                      stroke="currentColor" 
+                      strokeWidth="2" 
+                      strokeLinecap="round" 
+                      strokeLinejoin="round"
+                      className="transform group-hover:translate-x-1 transition-transform duration-300"
+                    >
+                      <path d="M5 12h14"/>
+                      <path d="m12 5 7 7-7 7"/>
+                    </svg>
+                  </div>
+                </Link>
                 
-                {/* Read more indicator */}
-                <div className="mt-4 flex items-center gap-2 text-sm text-muted-foreground/60 group-hover:text-accent transition-all duration-300">
-                  <span>ler mais</span>
-                  <svg 
-                    xmlns="http://www.w3.org/2000/svg" 
-                    width="16" 
-                    height="16" 
-                    viewBox="0 0 24 24" 
-                    fill="none" 
-                    stroke="currentColor" 
-                    strokeWidth="2" 
-                    strokeLinecap="round" 
-                    strokeLinejoin="round"
-                    className="transform group-hover:translate-x-1 transition-transform duration-300"
-                  >
-                    <path d="M5 12h14"/>
-                    <path d="m12 5 7 7-7 7"/>
-                  </svg>
-                </div>
-              </Link>
+                {/* Tags */}
+                {post.tags.length > 0 && (
+                  <div className="flex flex-wrap gap-2 pt-3">
+                    {post.tags.map((tag: string) => (
+                      <Link 
+                        key={tag} 
+                        href={`/tag/${slugifyTag(tag)}`}
+                        className="text-xs px-3 py-1 rounded-full bg-secondary text-secondary-foreground/80 hover:bg-accent hover:text-accent-foreground transition-colors duration-300"
+                      >
+                        {tag}
+                      </Link>
+                    ))}
+                  </div>
+                )}
+              </div>
             </article>
           ))}
         </div>

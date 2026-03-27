@@ -10,6 +10,17 @@ import { notFound } from 'next/navigation'
 import AudioPlayer from '../../components/audioplayer'
 import CusdisComments from '../../components/CusdisComments'
 import { calculateReadingTime, formatReadingTime } from '../../../lib/reading-time'
+import { ThemeToggleText } from '../../ThemeToggle'
+
+function slugifyTag(tag: string): string {
+  return tag
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9-]/g, '-')
+    .replace(/-+/g, '-')
+    .replace(/^-|-$/g, '')
+}
 
 export async function generateMetadata({ params }: { params: { postId: string } }): Promise<Metadata> {
   const post = await getPostContent(params.postId)
@@ -141,7 +152,7 @@ export default async function Post({ params }: { params: { postId: string } }) {
               {post.tags.map((tag: string) => (
                 <Link 
                   key={tag} 
-                  href={`/tag/${tag}`}
+                  href={`/tag/${slugifyTag(tag)}`}
                   className="text-sm text-muted-foreground/70 hover:text-accent transition-colors duration-300"
                 >
                   #{tag}
@@ -160,6 +171,8 @@ export default async function Post({ params }: { params: { postId: string } }) {
             <time>{formatDate(post.date)}</time>
             <span className="w-1 h-1 rounded-full bg-muted-foreground/50" />
             <span>{formatReadingTime(post.readingTime)}</span>
+            <span className="w-1 h-1 rounded-full bg-muted-foreground/50" />
+            <ThemeToggleText />
           </div>
           
           {/* Audio if available */}

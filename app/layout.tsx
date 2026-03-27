@@ -1,5 +1,4 @@
 import { ThemeProvider } from './ThemeProvider'
-import { ThemeToggle } from './ThemeToggle'
 import './globals.css'
 
 import type { Metadata } from 'next'
@@ -62,7 +61,6 @@ export default function RootLayout({
       <body>
         <ThemeProvider>
           <div className="min-h-screen transition-colors duration-500 ease-out">
-            <ThemeToggle />
             <main className="relative">
               {children}
             </main>
