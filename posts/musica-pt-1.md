@@ -3,6 +3,7 @@ title: "musica, parte 1"
 date: "2024-12-04"
 description: "reflexões sobre música e memória"
 audio: /audio/violao.m4a
+tags: ["música", "reflexão", "pessoal"]
 ---
 *descrição do audio: o autor tenta se lembrar de músicas que tocava quando tinha 16~18 anos, em um violão de nylon num lugar razoavelmente silencioso. as músicas são Pálida, do Phill Veras - um dedilhado composto por majoritariamente notas abertas e Quando bate Aquela Saudade do Rubel, composta por quatro acordes e os baixos sendo tocados entre-notas.*
 

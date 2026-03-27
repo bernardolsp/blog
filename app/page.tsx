@@ -33,6 +33,7 @@ function getPostMetadata() {
       title: matterResult.data.title,
       date: matterResult.data.date,
       slug: fileName.replace('.md', ''),
+      tags: matterResult.data.tags || [],
     }
   })
 
@@ -49,13 +50,36 @@ export default function Home() {
         <p className="text-sm opacity-70">gosto de pensar que tecnologia mudou a minha vida</p>
         <p className="text-sm opacity-50">(e espero impactar a sua também)</p>
       </header>
+      <div className="mb-8 text-center">
+        <a 
+          href="/feed.xml" 
+          className="inline-flex items-center gap-2 text-sm opacity-60 hover:opacity-100 transition-opacity"
+          title="Assinar feed RSS"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M4 11a9 9 0 0 1 9 9"/>
+            <path d="M4 4a16 16 0 0 1 16 16"/>
+            <circle cx="5" cy="19" r="1"/>
+          </svg>
+          rss
+        </a>
+      </div>
       <ul className="space-y-8">
         {posts.map((post) => (
           <li key={post.slug} className="border-t pt-8 first:border-t-0 first:pt-0">
             <Link href={`/post/${post.slug}`} className="block group">
               <h2 className="text-xl font-semibold mb-2 group-hover:underline">{post.title}</h2>
-              <p className="text-sm opacity-70">publicado em {(post as any).date}</p>
-              </Link>
+              <p className="text-sm opacity-70 mb-2">publicado em {(post as any).date}</p>
+              {post.tags.length > 0 && (
+                <div className="flex gap-2 text-sm">
+                  {post.tags.map((tag: string) => (
+                    <span key={tag} className="opacity-50">
+                      #{tag}
+                    </span>
+                  ))}
+                </div>
+              )}
+            </Link>
           </li>
         ))}
       </ul>

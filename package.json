@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "bun run generate:rss && next build",
+    "generate:rss": "bun run scripts/generate-rss.ts",
     "start": "next start",
     "lint": "next lint"
   },

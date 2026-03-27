@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>blog do bernardo</title>
+    <link>https://bernardolopes.com</link>
+    <description>um blog sobre vida e tecnologia</description>
+    <language>pt-BR</language>
+    <lastBuildDate>Fri, 27 Mar 2026 13:21:30 GMT</lastBuildDate>
+    <atom:link href="https://bernardolopes.com/feed.xml" rel="self" type="application/rss+xml"/>
+    <item>
+      <title>musica, parte 1</title>
+      <link>https://bernardolopes.com/post/musica-pt-1</link>
+      <guid>https://bernardolopes.com/post/musica-pt-1</guid>
+      <pubDate>Wed, 04 Dec 2024 00:00:00 GMT</pubDate>
+      <description>reflexões sobre música e memória</description>
+    </item>
+    <item>
+      <title>compras e receios</title>
+      <link>https://bernardolopes.com/post/compras-e-receios</link>
+      <guid>https://bernardolopes.com/post/compras-e-receios</guid>
+      <pubDate>Tue, 15 Oct 2024 00:00:00 GMT</pubDate>
+      <description>sobre compras que te causam ansiedade</description>
+    </item>
+    <item>
+      <title>introdução ao ser</title>
+      <link>https://bernardolopes.com/post/introducao-ao-ser</link>
+      <guid>https://bernardolopes.com/post/introducao-ao-ser</guid>
+      <pubDate>Wed, 09 Oct 2024 00:00:00 GMT</pubDate>
+      <description>sobre se entender além de quem você se diz ser</description>
+    </item>
+  </channel>
+</rss>

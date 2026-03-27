@@ -2,6 +2,7 @@
 title: "compras e receios"
 date: "2024-10-15"
 description: "sobre compras que te causam ansiedade"
+tags: ["reflexão", "dinheiro", "pessoal"]
 ---
 
 ### compras e receios

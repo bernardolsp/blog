@@ -36,6 +36,11 @@ export const metadata: Metadata = {
   icons: {
     shortcut: '/favicon.ico',
   },
+  alternates: {
+    types: {
+      'application/rss+xml': 'https://bernardolopes.com/feed.xml',
+    },
+  },
 }
 
 export default function RootLayout({
@@ -46,7 +51,6 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-      <script defer src="https://comentario.bernardolopes.com/comentario.js"></script>
         <ThemeProvider>
           <div className="min-h-screen transition-colors duration-300 ease-in-out">
             <ThemeToggle />
