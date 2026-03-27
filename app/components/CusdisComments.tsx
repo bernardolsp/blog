@@ -19,8 +19,8 @@ interface CusdisCommentsProps {
 const customStyles = `
   @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Source+Serif+4:wght@300;400;500;600&display=swap');
 
-  :root {
-    color-scheme: light;
+  :root, html {
+    color-scheme: light !important;
   }
 
   html, body {
@@ -28,6 +28,7 @@ const customStyles = `
     padding: 0;
     overflow: hidden;
     background: transparent !important;
+    color-scheme: light !important;
   }
 
   /* ---- Light mode ---- */
@@ -353,7 +354,6 @@ export default function CusdisComments({ attrs }: CusdisCommentsProps) {
     iframe.style.display = 'block'
     iframe.style.overflow = 'hidden'
     iframe.style.minHeight = '300px'
-    iframe.style.colorScheme = 'normal'
 
     iframeRef.current = iframe
 
